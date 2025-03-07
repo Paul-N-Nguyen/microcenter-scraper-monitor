@@ -1,0 +1,7 @@
+stores:
+  microcenter:
+    url: "https://www.microcenter.com/search/search_results.aspx?Ntk=all&sortby=match&prt=clearance&N=4294966938&myStore=false"
+    load_cookies: ""
+
+discord:
+  webhook_url: "https://your-discord-webhook-url"

@@ -1,0 +1,28 @@
+services:
+  prefect:
+    image: prefecthq/prefect:3-python3.12
+    environment:
+      PREFECT_HOME: /data
+    command: prefect server start --host 0.0.0.0
+    ports:
+      - "4200:4200"  # Prefect server UI and API
+    healthcheck:
+      test: [ "CMD-SHELL", "sleep 3 || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 2
+    volumes:
+      - prefect-data:/data
+
+  scrapper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PREFECT_API_URL: "http://prefect:4200/api"
+    depends_on:
+      prefect:
+        condition: service_healthy
+
+volumes:
+  prefect-data:
